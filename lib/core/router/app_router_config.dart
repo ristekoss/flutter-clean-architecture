@@ -1,19 +1,19 @@
-import 'package:go_router/go_router.dart';
-import 'package:boilerplate/features/main/presentation/pages/first_page.dart';
+import 'package:boilerplate/features/authentication/presentation/pages/login_page.dart';
 import 'package:boilerplate/features/main/presentation/pages/main_page.dart';
 import 'package:boilerplate/features/main/presentation/pages/second_page.dart';
 import 'package:boilerplate/features/main/presentation/pages/third_page.dart';
+import 'package:go_router/go_router.dart';
 
 import 'app_routes.dart';
 
 class AppRouterConfig {
   static final GoRouter _router = GoRouter(
-      initialLocation: '/',
+      initialLocation: LoginPage.route,
       routes: <RouteBase>[
         GoRoute(
-          path: '/',
-          name: AppRoutes.loginPage,
-          builder: (context, state) => const FirstPage()
+          path: LoginPage.route,
+          name: LoginPage.route,
+          builder: (context, state) => const LoginPage()
         ),
         ShellRoute(
             builder: (context, state, child) => MainPage(body: child),
