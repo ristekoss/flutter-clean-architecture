@@ -31,6 +31,12 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    isObscure.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
