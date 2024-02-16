@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
+import '../../services/di.dart';
+import 'network_utils.dart';
+
 enum NetworkServiceType {
   production,
   staging,
@@ -47,18 +50,25 @@ ${err.response?.statusCode ?? 0}: ${err.requestOptions.baseUrl}${err.requestOpti
 });
 
 final options = Options(
-  receiveTimeout: const Duration(milliseconds: 5000),
-  sendTimeout: const Duration(milliseconds: 6000),
+  receiveTimeout: const Duration(milliseconds: 120000),
+  sendTimeout: const Duration(milliseconds: 120000),
 );
 
 const Duration globalTimeout = Duration(seconds: 15);
 
 class NetworkService {
   final String baseUrl;
-  final NetworkServiceType type;
 
-  NetworkService(
-      {required this.baseUrl, this.type = NetworkServiceType.staging});
+  NetworkService({required this.baseUrl});
+
+  Map<String, String> headersRequest() {
+    final userToken = di<NetworkUtils>().accessToken;
+    return {
+      'Content-Type': 'application/json',
+      if (userToken.isNotEmpty) 'Authorization': 'Bearer $userToken',
+      'Accept': 'application/json'
+    };
+  }
 
   final dio = Dio()..interceptors.add(interceptors);
 
@@ -67,96 +77,102 @@ class NetworkService {
     Map<String, dynamic>? queryParams,
     Map<String, String>? headers,
   }) async {
-    final Map<String, String> defaultHeaders = {'Authorization': ''};
-
     /// If a key of [other] is already in this map, its value is overwritten.
-    headers?.addAll(defaultHeaders);
+    headers?.addAll(headersRequest());
 
-    Response response = await dio.get(baseUrl + path,
-        queryParameters: queryParams,
-        options: options.copyWith(
-          headers: headers ?? defaultHeaders,
-        )).timeout(globalTimeout);
+    Response response = await dio
+        .get(baseUrl + path,
+            queryParameters: queryParams,
+            options: options.copyWith(
+              headers: headers ?? headersRequest(),
+            ))
+        .timeout(globalTimeout);
     return response;
   }
 
   Future<Response> post(
-      String path, {
-        Map<String, dynamic>? queryParams,
-        Map<String, String>? headers,
-        Map<String, dynamic>? data,
-      }) async {
-    final Map<String, String> defaultHeaders = {'Authorization': ''};
-
+    String path, {
+    Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
+    Map<String, dynamic>? data,
+    FormData? formData,
+  }) async {
     /// If a key of [other] is already in this map, its value is overwritten.
-    headers?.addAll(defaultHeaders);
+    headers?.addAll(headersRequest());
 
-    Response response = await dio.post(baseUrl + path,
-        queryParameters: queryParams,
-        data: json.encode(data),
-        options: options.copyWith(
-          headers: headers ?? defaultHeaders,
-        )).timeout(globalTimeout);
+    Response response = await dio
+        .post(baseUrl + path,
+            queryParameters: queryParams,
+            data: formData ?? json.encode(data),
+            options: options.copyWith(
+              headers: headers ?? headersRequest(),
+            ))
+        .timeout(globalTimeout);
     return response;
   }
 
   Future<Response> put(
-      String path, {
-        Map<String, dynamic>? queryParams,
-        Map<String, String>? headers,
-        Map<String, dynamic>? data,
-      }) async {
-    final Map<String, String> defaultHeaders = {'Authorization': ''};
+    String path, {
+    Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
+    Map<String, dynamic>? data,
+    FormData? formData,
+  }) async {
+    final Map<String, String> defaultHeaders = headersRequest();
 
     /// If a key of [other] is already in this map, its value is overwritten.
-    headers?.addAll(defaultHeaders);
+    if (headers != null) {
+      defaultHeaders.addAll(headers);
+    }
 
-    Response response = await dio.put(baseUrl + path,
-        queryParameters: queryParams,
-        data: json.encode(data),
-        options: options.copyWith(
-          headers: headers ?? defaultHeaders,
-        )).timeout(globalTimeout);
+    Response response = await dio
+        .put(baseUrl + path,
+            queryParameters: queryParams,
+            data: formData ?? json.encode(data),
+            options: options.copyWith(
+              headers: defaultHeaders,
+            ))
+        .timeout(globalTimeout);
     return response;
   }
 
   Future<Response> delete(
-      String path, {
-        Map<String, dynamic>? queryParams,
-        Map<String, String>? headers,
-        Map<String, dynamic>? data,
-      }) async {
-    final Map<String, String> defaultHeaders = {'Authorization': ''};
-
+    String path, {
+    Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
+    Map<String, dynamic>? data,
+  }) async {
     /// If a key of [other] is already in this map, its value is overwritten.
-    headers?.addAll(defaultHeaders);
+    headers?.addAll(headersRequest());
 
-    Response response = await dio.delete(baseUrl + path,
-        queryParameters: queryParams,
-        data: json.encode(data),
-        options: options.copyWith(
-          headers: headers ?? defaultHeaders,
-        )).timeout(globalTimeout);
+    Response response = await dio
+        .delete(baseUrl + path,
+            queryParameters: queryParams,
+            data: json.encode(data),
+            options: options.copyWith(
+              headers: headers ?? headersRequest(),
+            ))
+        .timeout(globalTimeout);
     return response;
   }
 
   Future<Response> patch(
-      String path, {
-        Map<String, dynamic>? queryParams,
-        Map<String, String>? headers,
-        Map<String, dynamic>? data,
-      }) async {
-    final Map<String, String> defaultHeaders = {'Authorization': ''};
-
+    String path, {
+    Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
+    Map<String, dynamic>? data,
+  }) async {
     /// If a key of [other] is already in this map, its value is overwritten.
-    headers?.addAll(defaultHeaders);
+    headers?.addAll(headersRequest());
 
-    Response response = await dio.patch(baseUrl + path,
-        queryParameters: queryParams,
-        data: json.encode(data),
-        options: options.copyWith(
-          headers: headers ?? defaultHeaders,
-        )).timeout(globalTimeout);
+    Response response = await dio
+        .patch(baseUrl + path,
+            queryParameters: queryParams,
+            data: json.encode(data),
+            options: options.copyWith(
+              headers: headers ?? headersRequest(),
+            ))
+        .timeout(globalTimeout);
     return response;
   }
 }

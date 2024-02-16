@@ -7,7 +7,7 @@ import 'core/constants/endpoints.dart';
 import 'core/router/app_router_config.dart';
 
 void main() {
-  initLocator(Endpoints.baseUrl);
+  initLocator();
   runApp(const MyApp());
 }
 

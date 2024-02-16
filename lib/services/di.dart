@@ -6,16 +6,38 @@ import 'package:boilerplate/features/main/data/repositories/main_repository_impl
 import 'package:boilerplate/features/main/domain/use_cases/get_users_use_case.dart';
 import 'package:boilerplate/features/main/presentation/bloc/main_cubit.dart';
 
+import '../core/client/network_utils.dart';
+import '../core/constants/endpoints.dart';
 import '../features/main/domain/repositories/main_repository.dart';
 
 final di = GetIt.I;
 
-void initLocator(String baseUrl){
-  di.registerLazySingleton(() => NetworkService(baseUrl: baseUrl));
-  initMain();
-
+void initLocator(){
+  initCore();
   initFeatures();
 
+}
+
+void initCore() {
+  initNetwork(NetworkServiceType.staging);
+}
+
+void initNetwork(NetworkServiceType type) {
+  di.registerLazySingleton(() => NetworkUtils());
+  switch (type) {
+    case NetworkServiceType.production:
+      di.registerLazySingleton(
+              () => NetworkService(baseUrl: Endpoints.urlProd));
+      break;
+    case NetworkServiceType.staging:
+      di.registerLazySingleton(
+              () => NetworkService(baseUrl: Endpoints.urlStaging));
+  }
+}
+
+void initFeatures() {
+  registerOnboarding(di);
+  initMain();
 }
 
 void initMain(){
@@ -30,6 +52,3 @@ void initMain(){
   ));
 }
 
-void initFeatures() {
-  registerOnboarding(di);
-}

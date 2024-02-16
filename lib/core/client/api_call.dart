@@ -5,9 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'network_exception.dart';
 
-Future<Either<NetworkException, T>> apiCall<T>(Future<T> func) async {
+Future<Either<NetworkException, T>> apiCall<T>(result) async {
   try {
-    final result = await func;
     return Right(result);
   } catch (e) {
     if (e is DioException){

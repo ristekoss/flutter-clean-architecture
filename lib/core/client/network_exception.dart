@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 
 class NetworkException implements Exception {
   final String? message;
@@ -41,6 +44,35 @@ class NetworkException implements Exception {
           response: response,
         );
     }
+  }
+
+  static NetworkException handleException(Exception e) {
+    if (e is DioException){
+      switch (e.type){
+        case DioExceptionType.badResponse:
+          final err = NetworkException.handleBadResponse(e.response);
+          Logger().e(err.toString());
+          return err;
+        case DioExceptionType.connectionTimeout:
+          return ConnectionTimeOutException();
+        case DioExceptionType.sendTimeout:
+          return SendTimeOutException();
+        case DioExceptionType.receiveTimeout:
+          return ReceiveTimeOutException();
+        case DioExceptionType.cancel:
+          return RequestCancelled();
+        case DioExceptionType.badCertificate:
+          return BadCertificate();
+        default:
+          return FetchDataException();
+      }
+    }
+    if(e is FormatException){
+      Logger().e('Error: Format from front end error');
+    } else if(e is SocketException){
+      Logger().e('Error: No Internet Connection');
+    }
+    return GeneralException(message: e.toString());
   }
 }
 
