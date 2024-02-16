@@ -1,3 +1,4 @@
+import 'package:boilerplate/features/onboarding/di/onboaring_module.dart';
 import 'package:get_it/get_it.dart';
 import 'package:boilerplate/core/client/network_service.dart';
 import 'package:boilerplate/features/main/data/data_sources/main_remote_data_sources.dart';
@@ -13,6 +14,8 @@ void initLocator(String baseUrl){
   di.registerLazySingleton(() => NetworkService(baseUrl: baseUrl));
   initMain();
 
+  initFeatures();
+
 }
 
 void initMain(){
@@ -25,4 +28,8 @@ void initMain(){
   di.registerLazySingleton<MainCubit>(() => MainCubit(
     getUserUseCase: di<GetUserUseCase>()
   ));
+}
+
+void initFeatures() {
+  registerOnboarding(di);
 }
