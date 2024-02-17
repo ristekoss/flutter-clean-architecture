@@ -8,13 +8,17 @@ class AppTextField extends StatefulWidget {
   final String hint;
   final String? label;
   final bool obscureText;
+  final bool isError;
+  final void Function(String)? onChanged;
 
   const AppTextField({
     Key? key,
     required this.controller,
     required this.hint,
     this.label,
+    this.onChanged,
     this.obscureText = false,
+    this.isError = false,
   }) : super(key: key);
 
   @override
@@ -45,7 +49,7 @@ class _AppTextFieldState extends State<AppTextField> {
           Text(
             widget.label!,
             style: AppTextStyle.regularSemiBold.copyWith(
-              color: Colors.black45,
+              color: widget.isError ? Colors.red : Colors.black45,
             ),
           ),
         ValueListenableBuilder(
@@ -57,6 +61,7 @@ class _AppTextFieldState extends State<AppTextField> {
               style: AppTextStyle.regularSemiBold.copyWith(
                 color: Colors.black,
               ),
+              onChanged: widget.onChanged,
               decoration: InputDecoration(
                 hintText: widget.hint,
                 hintStyle: AppTextStyle.regularSemiBold.copyWith(

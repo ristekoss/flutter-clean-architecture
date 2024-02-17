@@ -16,23 +16,24 @@ class NetworkException implements Exception {
 
   static NetworkException handleBadResponse(Response? response) {
     var statusCode = response?.statusCode ?? 0;
+    var message = response?.data['message'];
     switch (statusCode) {
       case 400:
-        return BadRequestException(response: response);
+        return BadRequestException(response: response, message: message);
       case 401:
-        return UnauthorisedException(response: response);
+        return UnauthorisedException(response: response, message: message);
       case 403:
-        return BadRequestException(response: response);
+        return BadRequestException(response: response, message: message);
       case 404:
-        return NotFoundException(response: response);
+        return NotFoundException(response: response, message: message);
       case 409:
-        return ConflictException(response: response);
+        return ConflictException(response: response, message: message);
       case 408:
         return SendTimeOutException();
       case 413:
-        return RequestEntityTooLargeException(response: response);
+        return RequestEntityTooLargeException(response: response, message: message);
       case 422:
-        return UnprocessableEntityException(response: response);
+        return UnprocessableEntityException(response: response, message: message);
       case 500:
         return InternalServerErrorException();
       case 503:

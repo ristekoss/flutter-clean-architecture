@@ -18,10 +18,9 @@ class AuthRepositoryImpl implements AuthRepository {
     String password,
   ) async {
     final request = PostLoginRequest(username: username, password: password);
-    return _dataSources.postLogin(request).then(
-          (value) => apiCall<Auth>(
-            AuthMapper.mapResponseToDomain(value),
-          ),
-        );
+    return apiCall<Auth>(
+      func: _dataSources.postLogin(request),
+      mapper: (value) => AuthMapper.mapResponseToDomain(value),
+    );
   }
 }

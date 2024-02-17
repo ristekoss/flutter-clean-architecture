@@ -8,6 +8,7 @@ import 'package:boilerplate/design/widgets/app_text_field.dart';
 import 'package:boilerplate/design/widgets/primary_button.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/authentication_bloc.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/authentication_states.dart';
+import 'package:boilerplate/features/authentication/presentation/blocs/events/login_refresh_events.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/events/post_login_events.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/states/post_login_states.dart';
 import 'package:flutter/material.dart';
@@ -49,64 +50,91 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const Icon(
-                Icons.shopping_bag,
-                color: AppColors.primary,
-                size: 100,
-              ),
-              Text(
-                'Flutter Shop',
-                style:
-                    AppTextStyle.headline1.copyWith(color: AppColors.secondary),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 64,
-              ),
-              AppTextField(
-                controller: _nameController,
-                label: 'Username',
-                hint: 'Masukkan username',
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              AppTextField(
-                controller: _passwordController,
-                obscureText: true,
-                label: 'Password',
-                hint: 'Masukkan password',
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: AppTextButton(
-                  label: 'Lupa kata sandi?',
-                  onTap: () {},
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              BlocConsumer<AuthenticationBloc, AuthenticationStates>(
-                bloc: di<AuthenticationBloc>(),
-                listenWhen: (p, n) {
-                  return n is PostLoginLoadingState ||
-                      n is PostLoginSuccessState ||
-                      n is PostLoginErrorState;
-                },
-                listener: (context, state) {
-                  log(state.toString());
-                  if (state is PostLoginSuccessState) {
-                    context.pushReplacementNamed(AppRoutes.secondPage);
-                  }
-                },
-                builder: (context, state) {
-                  return PrimaryButton(
+          child: BlocConsumer<AuthenticationBloc, AuthenticationStates>(
+            bloc: di<AuthenticationBloc>(),
+            listenWhen: (p, n) {
+              return n is PostLoginLoadingState ||
+                  n is PostLoginSuccessState ||
+                  n is PostLoginErrorState;
+            },
+            listener: (context, state) {
+              log(state.toString());
+              if (state is PostLoginSuccessState) {
+                context.pushReplacementNamed(AppRoutes.secondPage);
+              }
+            },
+            buildWhen: (p, n) {
+              return n is PostLoginLoadingState ||
+                  n is PostLoginSuccessState ||
+                  n is PostLoginErrorState ||
+                  n is PostLoginInitState;
+            },
+            builder: (context, state) {
+              return Column(
+                children: [
+                  const Icon(
+                    Icons.shopping_bag,
+                    color: AppColors.primary,
+                    size: 100,
+                  ),
+                  Text(
+                    'Flutter Shop',
+                    style: AppTextStyle.headline1.copyWith(
+                      color: AppColors.secondary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 64,
+                  ),
+                  if (state is PostLoginErrorState)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        state.message,
+                        style: AppTextStyle.regularSemiBold.copyWith(
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  AppTextField(
+                    controller: _nameController,
+                    label: 'Username',
+                    hint: 'Masukkan username',
+                    onChanged: (_) {
+                      if (state is PostLoginErrorState) {
+                        di<AuthenticationBloc>().add(LoginRefreshEvent());
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  AppTextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    label: 'Password',
+                    hint: 'Masukkan password',
+                    onChanged: (_) {
+                      if (state is PostLoginErrorState) {
+                        di<AuthenticationBloc>().add(LoginRefreshEvent());
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: AppTextButton(
+                      label: 'Lupa kata sandi?',
+                      onTap: () {},
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  PrimaryButton(
                     text: 'Log in',
                     isLoading: state is PostLoginLoadingState,
                     onTap: () {
@@ -117,13 +145,13 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       );
                     },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-            ],
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

@@ -1,11 +1,12 @@
-import 'dart:developer';
-
+import 'package:boilerplate/core/client/network_utils.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/states/post_login_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../services/di.dart';
 import '../../domain/use_cases/authentication_use_cases.dart';
 import 'authentication_events.dart';
 import 'authentication_states.dart';
+import 'events/login_refresh_events.dart';
 import 'events/post_login_events.dart';
 
 class AuthenticationBloc
@@ -14,28 +15,32 @@ class AuthenticationBloc
 
   AuthenticationBloc(this._useCases) : super(PostLoginInitState()) {
     on<PostLoginEvent>(_onPostLoginEvent);
+    on<LoginRefreshEvent>(_onLoginRefreshEvent);
   }
 
   Future _onPostLoginEvent(
       PostLoginEvent event, Emitter<AuthenticationStates> emitter) async {
     emitter(PostLoginLoadingState());
-    try {
-      final response =
-          await _useCases.postLogin(event.username, event.password);
-      response.fold(
-        (l) {
-          emitter(
-            PostLoginErrorState(message: l.message ?? ''),
-          );
-        },
-        (r) {
-          emitter(PostLoginSuccessState(auth: r));
-        },
-      );
-      log('kaga error');
-    } catch (e) {
-      log('error di sini');
-      log(e.toString());
+    final response = await _useCases.postLogin(event.username, event.password);
+    response.fold(
+      (l) {
+        emitter(
+          PostLoginErrorState(message: l.message ?? ''),
+        );
+      },
+      (r) {
+        emitter(PostLoginSuccessState(auth: r));
+        di<NetworkUtils>().setToken(accessToken: r.token, refreshToken: r.token);
+      },
+    );
+  }
+
+  Future _onLoginRefreshEvent(
+    LoginRefreshEvent event,
+    Emitter<AuthenticationStates> emitter,
+  ) async {
+    if (state is PostLoginErrorState) {
+      emitter(PostLoginInitState());
     }
   }
 }

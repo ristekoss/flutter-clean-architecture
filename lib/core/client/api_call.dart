@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -5,12 +6,16 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'network_exception.dart';
 
-Future<Either<NetworkException, T>> apiCall<T>(result) async {
+Future<Either<NetworkException, T>> apiCall<T>({
+  required Future<dynamic> func,
+  required T Function(dynamic) mapper,
+}) async {
   try {
-    return Right(result);
+    final result = await func;
+    return Right(mapper(result));
   } catch (e) {
-    if (e is DioException){
-      switch (e.type){
+    if (e is DioException) {
+      switch (e.type) {
         case DioExceptionType.badResponse:
           final err = NetworkException.handleBadResponse(e.response);
           Logger().e(err.toString());
@@ -29,9 +34,9 @@ Future<Either<NetworkException, T>> apiCall<T>(result) async {
           return Left(FetchDataException());
       }
     }
-    if(e is FormatException){
+    if (e is FormatException) {
       Logger().e('Error: Format from front end error');
-    } else if(e is SocketException){
+    } else if (e is SocketException) {
       Logger().e('Error: No Internet Connection');
     }
     return Left(GeneralException(message: e.toString()));
