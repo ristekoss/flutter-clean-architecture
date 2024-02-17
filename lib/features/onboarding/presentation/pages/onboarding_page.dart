@@ -1,4 +1,3 @@
-import 'package:boilerplate/core/router/app_routes.dart';
 import 'package:boilerplate/design/widgets/page_indicator.dart';
 import 'package:boilerplate/design/widgets/primary_button.dart';
 import 'package:boilerplate/features/authentication/presentation/pages/login_page.dart';

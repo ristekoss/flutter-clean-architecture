@@ -1,7 +1,10 @@
-import 'package:boilerplate/features/onboarding/presentation/blocs/events/init_onboarding_event.dart';
+import 'dart:developer';
+
+import 'package:boilerplate/core/router/app_routes.dart';
+import 'package:boilerplate/features/onboarding/presentation/blocs/events/get_user_event.dart';
 import 'package:boilerplate/features/onboarding/presentation/blocs/onboarding_bloc.dart';
 import 'package:boilerplate/features/onboarding/presentation/blocs/onboarding_states.dart';
-import 'package:boilerplate/features/onboarding/presentation/blocs/states/init_onboarding_states.dart';
+import 'package:boilerplate/features/onboarding/presentation/blocs/states/onboarding_states.dart';
 import 'package:boilerplate/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +24,9 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   void initState() {
-    di<OnboardingBloc>().add(GetLocalDataEvent());
+    di<OnboardingBloc>().add(GetUserEvent());
     super.initState();
   }
 
@@ -34,10 +36,16 @@ class _SplashPageState extends State<SplashPage> {
       body: BlocListener<OnboardingBloc, OnboardingStates>(
         bloc: di<OnboardingBloc>(),
         listenWhen: (prev, next) {
-          return next != prev;
+          return next is OnboardingLoggedState ||
+              next is OnboardingNewState ||
+              next is OnboardingErrorState;
         },
         listener: (context, state) {
-          if (state is InitOnboardingSuccessState) {
+          log(state.toString());
+          if (state is OnboardingLoggedState) {
+            context.pushReplacementNamed(AppRoutes.secondPage);
+          }
+          if (state is OnboardingNewState) {
             context.pushReplacementNamed(OnboardingPage.route);
           }
         },
@@ -50,8 +58,9 @@ class _SplashPageState extends State<SplashPage> {
               child: Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(20)),
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: const Icon(
                   Icons.shopping_bag,
                   color: Colors.white,

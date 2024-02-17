@@ -1,13 +1,12 @@
+import 'package:boilerplate/design/constants/colors.dart';
 import 'package:boilerplate/services/di.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'core/bases/bloc_providers.dart';
-import 'core/constants/endpoints.dart';
 import 'core/router/app_router_config.dart';
 
-void main() {
-  initLocator();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initLocator();
   runApp(const MyApp());
 }
 
@@ -17,16 +16,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: BlocProviders.blocs(),
-      child: MaterialApp.router(
-        title: 'Flutter Boilerplate',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+    return MaterialApp.router(
+      title: 'Flutter Boilerplate',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primary,
         ),
-        routerConfig: AppRouterConfig.getRouter(),
+        useMaterial3: true,
       ),
+      routerConfig: AppRouterConfig.getRouter(),
     );
   }
 }
