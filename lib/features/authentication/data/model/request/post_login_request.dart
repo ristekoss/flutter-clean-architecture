@@ -1,8 +1,8 @@
-class PostLoginParams {
+class PostLoginRequest {
   final String username;
   final String password;
 
-  const PostLoginParams({
+  const PostLoginRequest({
     required this.username,
     required this.password,
   });

@@ -1,10 +1,11 @@
 import 'package:boilerplate/core/client/network_service.dart';
 import 'package:boilerplate/core/constants/endpoints.dart';
-import 'package:boilerplate/features/authentication/data/remote/responses/auth_response.dart';
-import 'package:boilerplate/features/authentication/domain/model/params/auth_params.dart';
+import 'package:boilerplate/features/authentication/data/model/request/post_login_request.dart';
+
+import '../model/responses/auth_response.dart';
 
 abstract class AuthRemoteDataSources {
-  Future<AuthResponse> postLogin(PostLoginParams params);
+  Future<AuthResponse> postLogin(PostLoginRequest request);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSources {
@@ -13,9 +14,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSources {
   const AuthRemoteDataSourceImpl(this.networkService);
 
   @override
-  Future<AuthResponse> postLogin(PostLoginParams params) async {
+  Future<AuthResponse> postLogin(PostLoginRequest request) async {
     const url = Endpoints.login;
-    final response = await networkService.post(url, data: params.toJson());
+    final response = await networkService.post(url, data: request.toJson());
     return AuthResponse.fromJson(response.data);
   }
 }

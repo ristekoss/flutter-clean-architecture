@@ -1,5 +1,6 @@
-import 'package:boilerplate/features/authentication/data/remote/responses/auth_response.dart';
 import 'package:boilerplate/features/authentication/domain/model/auth.dart';
+
+import '../responses/auth_response.dart';
 
 class AuthMapper {
   static Auth mapResponseToDomain(AuthResponse response) {

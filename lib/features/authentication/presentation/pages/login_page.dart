@@ -1,11 +1,20 @@
+import 'dart:developer';
+
 import 'package:boilerplate/core/router/app_routes.dart';
 import 'package:boilerplate/design/constants/colors.dart';
 import 'package:boilerplate/design/constants/text_style.dart';
 import 'package:boilerplate/design/widgets/app_text_button.dart';
 import 'package:boilerplate/design/widgets/app_text_field.dart';
 import 'package:boilerplate/design/widgets/primary_button.dart';
+import 'package:boilerplate/features/authentication/presentation/blocs/authentication_bloc.dart';
+import 'package:boilerplate/features/authentication/presentation/blocs/authentication_states.dart';
+import 'package:boilerplate/features/authentication/presentation/blocs/events/post_login_events.dart';
+import 'package:boilerplate/features/authentication/presentation/blocs/states/post_login_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../services/di.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -49,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Text(
                 'Flutter Shop',
-                style: AppTextStyle.headline1.copyWith(color: AppColors.secondary),
+                style:
+                    AppTextStyle.headline1.copyWith(color: AppColors.secondary),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -82,10 +92,32 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 24,
               ),
-              PrimaryButton(
-                text: 'Log in',
-                onTap: () {
-                  context.pushReplacementNamed(AppRoutes.secondPage);
+              BlocConsumer<AuthenticationBloc, AuthenticationStates>(
+                bloc: di<AuthenticationBloc>(),
+                listenWhen: (p, n) {
+                  return n is PostLoginLoadingState ||
+                      n is PostLoginSuccessState ||
+                      n is PostLoginErrorState;
+                },
+                listener: (context, state) {
+                  log(state.toString());
+                  if (state is PostLoginSuccessState) {
+                    context.pushReplacementNamed(AppRoutes.secondPage);
+                  }
+                },
+                builder: (context, state) {
+                  return PrimaryButton(
+                    text: 'Log in',
+                    isLoading: state is PostLoginLoadingState,
+                    onTap: () {
+                      di<AuthenticationBloc>().add(
+                        PostLoginEvent(
+                          username: _nameController.text,
+                          password: _passwordController.text,
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
               const SizedBox(
