@@ -1,6 +1,5 @@
 import 'package:boilerplate/core/client/network_service.dart';
 import 'package:boilerplate/core/constants/endpoints.dart';
-import 'package:boilerplate/features/authentication/data/model/request/post_login_request.dart';
 
 import '../model/responses/onboarding_response.dart';
 

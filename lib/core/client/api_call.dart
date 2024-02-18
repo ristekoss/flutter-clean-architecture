@@ -1,9 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+
 import 'network_exception.dart';
 
 Future<Either<NetworkException, T>> apiCall<T>({

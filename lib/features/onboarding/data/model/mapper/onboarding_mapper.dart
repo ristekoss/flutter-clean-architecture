@@ -1,4 +1,4 @@
-import '../../../domain/model/auth.dart';
+import '../../../domain/model/onboarding_user.dart';
 import '../responses/onboarding_response.dart';
 
 class OnboardingMapper {
