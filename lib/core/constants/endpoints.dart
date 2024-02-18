@@ -1,7 +1,6 @@
-class Endpoints {
-    static const String urlProd = 'https://dummyjson.com/';
-    static const String urlStaging = 'https://dummyjson.com/';
+import 'package:boilerplate/core/constants/secrets.dart';
 
+class Endpoints {
     // auth
     static const String login = "auth/login";
     static const String getUser = "auth/me";

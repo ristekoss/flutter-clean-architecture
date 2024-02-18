@@ -1,22 +1,22 @@
 import 'package:boilerplate/core/client/network_service.dart';
+import 'package:boilerplate/core/constants/secrets.dart';
 import 'package:boilerplate/features/authentication/di/authentication_module.dart';
 import 'package:boilerplate/features/onboarding/di/onboarding_module.dart';
 import 'package:boilerplate/services/secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
 import '../core/client/network_utils.dart';
-import '../core/constants/endpoints.dart';
 
 final di = GetIt.I;
 
-Future<void> initLocator() async {
-  await initCore();
+Future<void> initLocator(NetworkServiceType type) async {
+  await initCore(type);
   initFeatures();
 }
 
-Future<void> initCore() async {
+Future<void> initCore(NetworkServiceType type) async {
   initStorage();
-  await initNetwork(NetworkServiceType.staging);
+  await initNetwork(type);
 }
 
 void initFeatures() {
@@ -31,11 +31,11 @@ Future<void> initNetwork(NetworkServiceType type) async {
   switch (type) {
     case NetworkServiceType.production:
       di.registerLazySingleton<NetworkService>(
-          () => NetworkService(baseUrl: Endpoints.urlProd));
+          () => NetworkService(baseUrl: Secret.baseUrlProd));
       break;
     case NetworkServiceType.staging:
       di.registerLazySingleton<NetworkService>(
-          () => NetworkService(baseUrl: Endpoints.urlStaging));
+          () => NetworkService(baseUrl: Secret.baseUrlDev));
   }
 }
 
