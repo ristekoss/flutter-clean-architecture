@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRouterConfig {
   static final GoRouter _router = GoRouter(
-    initialLocation: LoginPage.route,
+    initialLocation: SplashPage.route,
     routes: <RouteBase>[
       GoRoute(
           path: ForgotPasswordPage.route,
