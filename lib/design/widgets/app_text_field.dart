@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../constants/colors.dart';
 import '../constants/text_style.dart';
@@ -10,6 +11,7 @@ class AppTextField extends StatefulWidget {
   final bool obscureText;
   final bool isError;
   final void Function(String)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AppTextField({
     Key? key,
@@ -19,6 +21,7 @@ class AppTextField extends StatefulWidget {
     this.onChanged,
     this.obscureText = false,
     this.isError = false,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -62,6 +65,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 color: Colors.black,
               ),
               onChanged: widget.onChanged,
+              inputFormatters: widget.inputFormatters,
               decoration: InputDecoration(
                 hintText: widget.hint,
                 hintStyle: AppTextStyle.regularSemiBold.copyWith(

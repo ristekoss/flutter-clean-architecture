@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:boilerplate/core/router/app_routes.dart';
 import 'package:boilerplate/features/onboarding/presentation/blocs/events/get_user_event.dart';
 import 'package:boilerplate/features/onboarding/presentation/blocs/onboarding_bloc.dart';
 import 'package:boilerplate/features/onboarding/presentation/blocs/onboarding_states.dart';
 import 'package:boilerplate/features/onboarding/presentation/blocs/states/onboarding_states.dart';
 import 'package:boilerplate/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:boilerplate/features/product/presentation/home/pages/product_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -43,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
         listener: (context, state) {
           log(state.toString());
           if (state is OnboardingLoggedState) {
-            context.pushReplacementNamed(AppRoutes.secondPage);
+            context.pushReplacementNamed(ProductHomePage.route);
           }
           if (state is OnboardingNewState) {
             context.pushReplacementNamed(OnboardingPage.route);
