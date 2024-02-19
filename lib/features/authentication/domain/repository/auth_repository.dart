@@ -7,4 +7,9 @@ abstract class AuthRepository {
     String username,
     String password,
   );
+
+  Future<Either<Exception, void>> saveToken(
+    String accessToken,
+    String refreshToken,
+  );
 }

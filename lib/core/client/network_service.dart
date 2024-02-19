@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-import '../../services/di.dart';
 import 'network_utils.dart';
 
 enum NetworkServiceType {
@@ -58,11 +57,15 @@ const Duration globalTimeout = Duration(seconds: 15);
 
 class NetworkService {
   final String baseUrl;
+  final NetworkUtils networkUtils;
 
-  NetworkService({required this.baseUrl});
+  NetworkService({
+    required this.baseUrl,
+    required this.networkUtils,
+  });
 
   Map<String, String> headersRequest() {
-    final userToken = di<NetworkUtils>().accessToken;
+    final userToken = networkUtils.accessToken;
     return {
       'Content-Type': 'application/json',
       if (userToken.isNotEmpty) 'Authorization': 'Bearer $userToken',

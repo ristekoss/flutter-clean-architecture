@@ -1,8 +1,6 @@
-import 'package:boilerplate/core/client/network_utils.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/states/post_login_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../services/di.dart';
 import '../../domain/use_cases/authentication_use_cases.dart';
 import 'authentication_events.dart';
 import 'authentication_states.dart';
@@ -29,8 +27,7 @@ class AuthenticationBloc
         );
       },
       (r) async {
-        await di<NetworkUtils>()
-            .setToken(accessToken: r.token, refreshToken: r.token);
+        await _useCases.saveToken(r.token, r.token);
         emitter(PostLoginSuccessState(auth: r));
       },
     );
