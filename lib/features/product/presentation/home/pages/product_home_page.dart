@@ -12,6 +12,11 @@ class ProductHomePage extends StatefulWidget {
 class _ProductHomePageState extends State<ProductHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: Container(
+        color: Colors.white,
+        child: const Text('Product Home'),
+      ),
+    );
   }
 }

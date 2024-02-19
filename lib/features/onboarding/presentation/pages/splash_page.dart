@@ -43,10 +43,10 @@ class _SplashPageState extends State<SplashPage> {
         listener: (context, state) {
           log(state.toString());
           if (state is OnboardingLoggedState) {
-            context.pushReplacementNamed(ProductHomePage.route);
+            context.goNamed(ProductHomePage.route);
           }
           if (state is OnboardingNewState) {
-            context.pushReplacementNamed(OnboardingPage.route);
+            context.goNamed(OnboardingPage.route);
           }
         },
         child: Column(
