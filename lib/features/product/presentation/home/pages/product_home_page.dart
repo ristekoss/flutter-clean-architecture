@@ -1,3 +1,5 @@
+import 'package:boilerplate/features/product/data/static/product_static_data_sources.dart';
+import 'package:boilerplate/features/product/presentation/home/widgets/product_category_item_widget.dart';
 import 'package:boilerplate/features/product/presentation/home/widgets/product_home_app_bar_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -32,23 +34,27 @@ class _ProductHomePageState extends State<ProductHomePage> {
         ProductHomeAppBarWidget(
           controller: _searchController,
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (_, int index) {
-              return ListTile(
-                leading: Container(
-                  padding: const EdgeInsets.all(8),
-                  width: 100,
-                  child: const Placeholder(),
-                ),
-                title: Text(
-                  'Place ${index + 1}',
-                ),
-              );
-            },
-            childCount: 20,
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 256,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 8
+              ),
+              itemCount: ProductStaticDataSources.productCategories.length,
+              itemBuilder: (context, index) {
+                final item = ProductStaticDataSources.productCategories[index];
+                return ProductCategoryItemWidget(
+                  icon: item.icon,
+                  text: item.title,
+                );
+              },
+            ),
           ),
-        ),
+        )
       ],
     );
   }
