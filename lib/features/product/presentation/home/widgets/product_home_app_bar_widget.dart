@@ -25,8 +25,8 @@ class ProductHomeAppBarWidget extends StatelessWidget {
             bottomLeft: Radius.circular(24.0),
           ),
           child: Image.network(
-            'https://cdn.dummyjson.com/product-images/1/thumbnail.jpg',
-            fit: BoxFit.fitHeight,
+            'https://cdn.dummyjson.com/product-images/4/thumbnail.jpg',
+            fit: BoxFit.cover,
           ),
         ),
       ),
