@@ -22,7 +22,9 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: body,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: routes.indexOf(Go.getLocation(context)),
+        currentIndex: routes.indexOf(
+          Go.getLocation(context),
+        ),
         onTap: (index) => context.goNamed(routes[index]),
         items: const [
           BottomNavigationBarItem(
