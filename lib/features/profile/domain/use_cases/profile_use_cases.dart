@@ -5,4 +5,5 @@ import '../model/user.dart';
 
 abstract class ProfileUseCases {
   Future<Either<NetworkException, User>> getUser();
+  Future<Either<NetworkException, void>> logOut();
 }

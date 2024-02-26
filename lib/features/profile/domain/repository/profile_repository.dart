@@ -4,4 +4,5 @@ import '../model/user.dart';
 
 abstract class ProfileRepository {
   Future<Either<NetworkException, User>> getUser();
+  Future<Either<NetworkException, void>> logOut();
 }

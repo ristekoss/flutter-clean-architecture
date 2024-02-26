@@ -14,4 +14,9 @@ class ProfileInteractor implements ProfileUseCases {
   Future<Either<NetworkException, User>> getUser() {
     return _repository.getUser();
   }
+
+  @override
+  Future<Either<NetworkException, void>> logOut() {
+    return _repository.logOut();
+  }
 }
