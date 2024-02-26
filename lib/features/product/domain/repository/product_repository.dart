@@ -1,4 +1,3 @@
-import 'package:boilerplate/features/product/domain/model/product_user.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/client/network_exception.dart';
@@ -9,6 +8,4 @@ abstract class ProductRepository {
     int limit,
     int skip,
   );
-
-  Future<Either<NetworkException, ProductUser>> getUser();
 }

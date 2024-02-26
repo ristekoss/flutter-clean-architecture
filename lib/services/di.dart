@@ -3,6 +3,7 @@ import 'package:boilerplate/core/constants/secrets.dart';
 import 'package:boilerplate/core/database/secure_database.dart';
 import 'package:boilerplate/features/authentication/di/authentication_module.dart';
 import 'package:boilerplate/features/onboarding/di/onboarding_module.dart';
+import 'package:boilerplate/features/product/di/product_module.dart';
 import 'package:boilerplate/services/secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -23,6 +24,7 @@ Future<void> initCore(NetworkServiceType type) async {
 void initFeatures() {
   registerOnboarding(di);
   registerAuthentication(di);
+  registerProduct(di);
 }
 
 Future<void> initNetwork(NetworkServiceType type) async {

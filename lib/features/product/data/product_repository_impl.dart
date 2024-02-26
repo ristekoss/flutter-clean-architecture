@@ -5,7 +5,6 @@ import 'package:boilerplate/features/product/domain/model/product.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../core/client/api_call.dart';
-import '../domain/model/product_user.dart';
 import '../domain/repository/product_repository.dart';
 import 'model/mapper/product_mapper.dart';
 
@@ -13,14 +12,6 @@ class ProductRepositoryImpl implements ProductRepository {
   final ProductRemoteDataSources _dataSources;
 
   const ProductRepositoryImpl(this._dataSources);
-
-  @override
-  Future<Either<NetworkException, ProductUser>> getUser() {
-    return apiCall<ProductUser>(
-      func: _dataSources.getUser(),
-      mapper: (value) => ProductMapper.mapResponseToDomain(value),
-    );
-  }
 
   @override
   Future<Either<NetworkException, List<Product>>> getProducts(
