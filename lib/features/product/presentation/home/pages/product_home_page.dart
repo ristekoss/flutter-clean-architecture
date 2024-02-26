@@ -1,14 +1,10 @@
-import 'dart:developer';
-
 import 'package:boilerplate/features/product/data/static/product_static_data_sources.dart';
 import 'package:boilerplate/features/product/presentation/home/blocs/event/get_home_product_event.dart';
 import 'package:boilerplate/features/product/presentation/home/blocs/product_home_bloc.dart';
-import 'package:boilerplate/features/product/presentation/home/blocs/product_home_states.dart';
-import 'package:boilerplate/features/product/presentation/home/blocs/states/get_home_product_states.dart';
 import 'package:boilerplate/features/product/presentation/home/widgets/product_category_item_widget.dart';
 import 'package:boilerplate/features/product/presentation/home/widgets/product_home_app_bar_widget.dart';
+import 'package:boilerplate/features/product/presentation/home/widgets/product_list_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../services/di.dart';
 
@@ -66,45 +62,7 @@ class _ProductHomePageState extends State<ProductHomePage> {
               ),
             ),
           ),
-          BlocBuilder<ProductHomeBloc, ProductHomeStates>(
-            bloc: di<ProductHomeBloc>(),
-            buildWhen: (p, n) {
-              return n is GetHomeProductSuccessState ||
-                  n is GetHomeProductLoadingState ||
-                  n is GetHomeProductErrorState ||
-                  n is GetHomeProductInitialState;
-            },
-            builder: (context, state) {
-              log('states');
-              log(state.toString());
-              if (state is GetHomeProductSuccessState) {
-                return SliverGrid.builder(
-                  itemCount: state.products.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                    childAspectRatio: 2.0,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    final item = state.products[index];
-
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.teal[100 * (index % 9)],
-                      child: Text(
-                        item.title.toString(),
-                      ),
-                    );
-                  },
-                );
-              }
-              if (state is GetHomeProductLoadingState) {
-                return const SliverToBoxAdapter(child: CircularProgressIndicator());
-              }
-              return const SliverToBoxAdapter(child: SizedBox());
-            },
-          ),
+          const ProductListWidget(),
         ],
       ),
     );
