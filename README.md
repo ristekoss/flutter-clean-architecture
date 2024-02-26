@@ -89,8 +89,9 @@ build: Changes to the build/compilation/packaging process or auxiliary tools suc
 
 ci: Changes in the continuous integration/delivery setup  
 
+  
 
-examples:  
+#### examples:  
 
 feat(auth): Form Login  
 
@@ -99,7 +100,7 @@ feat(product): implement product screen
 ci: refactor analysis job 
 
 
-before push
+#### before push
 1. flutter analyze
 2. flutter test
 
