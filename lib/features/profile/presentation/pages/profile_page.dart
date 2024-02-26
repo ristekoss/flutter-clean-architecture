@@ -1,4 +1,3 @@
-import 'package:boilerplate/design/constants/colors.dart';
 import 'package:boilerplate/design/constants/text_style.dart';
 import 'package:boilerplate/design/widgets/primary_button.dart';
 import 'package:boilerplate/features/authentication/presentation/pages/login_page.dart';
