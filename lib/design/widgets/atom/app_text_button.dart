@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/colors.dart';
-import '../constants/text_style.dart';
+import '../../constants/colors.dart';
+import '../../constants/text_style.dart';
 
 class AppTextButton extends StatelessWidget {
   final String label;

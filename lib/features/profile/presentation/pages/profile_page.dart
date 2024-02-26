@@ -1,5 +1,5 @@
 import 'package:boilerplate/design/constants/text_style.dart';
-import 'package:boilerplate/design/widgets/primary_button.dart';
+import 'package:boilerplate/design/widgets/atom/primary_button.dart';
 import 'package:boilerplate/features/authentication/presentation/pages/login_page.dart';
 import 'package:boilerplate/features/profile/presentation/blocs/authentication_bloc.dart';
 import 'package:boilerplate/features/profile/presentation/blocs/events/get_user_event.dart';

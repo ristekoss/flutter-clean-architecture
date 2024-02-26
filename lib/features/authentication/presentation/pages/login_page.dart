@@ -1,8 +1,8 @@
 import 'package:boilerplate/design/constants/colors.dart';
 import 'package:boilerplate/design/constants/text_style.dart';
-import 'package:boilerplate/design/widgets/app_text_button.dart';
-import 'package:boilerplate/design/widgets/app_text_field.dart';
-import 'package:boilerplate/design/widgets/primary_button.dart';
+import 'package:boilerplate/design/widgets/atom/app_text_button.dart';
+import 'package:boilerplate/design/widgets/atom/app_text_field.dart';
+import 'package:boilerplate/design/widgets/atom/primary_button.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/authentication_bloc.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/authentication_states.dart';
 import 'package:boilerplate/features/authentication/presentation/blocs/events/login_refresh_events.dart';

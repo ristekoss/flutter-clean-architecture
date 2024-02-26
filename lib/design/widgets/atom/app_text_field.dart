@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../constants/colors.dart';
-import '../constants/text_style.dart';
+import '../../constants/colors.dart';
+import '../../constants/text_style.dart';
 
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;

@@ -1,9 +1,10 @@
-import 'package:boilerplate/design/widgets/page_indicator.dart';
-import 'package:boilerplate/design/widgets/primary_button.dart';
+import 'package:boilerplate/design/widgets/atom/page_indicator.dart';
 import 'package:boilerplate/features/authentication/presentation/pages/login_page.dart';
 import 'package:boilerplate/features/onboarding/presentation/widgets/onboarding_body.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../design/widgets/atom/primary_button.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});

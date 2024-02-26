@@ -1,12 +1,12 @@
 import 'package:boilerplate/core/utils/formatter/phone_formatter.dart';
-import 'package:boilerplate/design/widgets/primary_button.dart';
+import 'package:boilerplate/design/widgets/atom/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../design/constants/colors.dart';
 import '../../../../design/constants/text_style.dart';
-import '../../../../design/widgets/app_text_field.dart';
+import '../../../../design/widgets/atom/app_text_field.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});

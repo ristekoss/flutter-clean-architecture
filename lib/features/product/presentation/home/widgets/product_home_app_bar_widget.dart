@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../design/constants/colors.dart';
-import '../../../../../design/widgets/app_text_field.dart';
+import '../../../../../design/widgets/atom/app_text_field.dart';
 
 class ProductHomeAppBarWidget extends StatelessWidget {
   final TextEditingController controller;
