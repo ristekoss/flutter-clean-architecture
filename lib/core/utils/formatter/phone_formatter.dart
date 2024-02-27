@@ -15,14 +15,13 @@ class PhoneFormatter extends TextInputFormatter {
     for (int i = 0; i < text.length; i++) {
       stringBuffer.write(text[i]);
       if ((i + 1) % 4 == 0 && (i + 1) != text.length) {
-        stringBuffer.write(' ');
+        stringBuffer.write('-');
       }
     }
 
-    final string = stringBuffer.toString();
     return newValue.copyWith(
-      text: string,
-      selection: TextSelection.collapsed(offset: string.length),
+      text: stringBuffer.toString(),
+      selection: TextSelection.collapsed(offset: stringBuffer.length),
     );
   }
 }
