@@ -10,12 +10,15 @@ class PhoneFormatter extends TextInputFormatter {
       return newValue;
     }
     final stringBuffer = StringBuffer();
+    const sectionLength = 4;
+    const separator = '-';
 
     final text = newValue.text;
     for (int i = 0; i < text.length; i++) {
       stringBuffer.write(text[i]);
-      if ((i + 1) % 4 == 0 && (i + 1) != text.length) {
-        stringBuffer.write('-');
+      final indexAfter = i+1;
+      if (indexAfter % sectionLength == 0 && indexAfter != text.length) {
+        stringBuffer.write(separator);
       }
     }
 
