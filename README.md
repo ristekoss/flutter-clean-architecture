@@ -37,11 +37,23 @@ Reso coder's flutter clean architecture
 
 ![alt text](https://i0.wp.com/resocoder.com/wp-content/uploads/2019/08/Clean-Architecture-Flutter-Diagram.png?ssl=1)
 
+#### Module generator
+
+In order to minimize your effort in repetitive code writing, you can use the module_generator.dart
+
+simply run
+
+```
+dart run .\module_generator.dart
+```
+
+and insert your module name (example: catalog)
+
 ### 🧬️ State Management
 
-Using BLoC for robust and battle proven state management
+Since we use clean architecture, it doesn't matter what state management you prefer to use  
 
-visit https://pub.dev/packages/flutter_bloc
+But for this project example, we use [Bloc](https://pub.dev/packages/flutter_bloc) 
 
 ### API Documentation
 
