@@ -2,7 +2,7 @@
 [![Generic badge](https://img.shields.io/badge/Flutter-v3.16.1-blue)](https://flutter.dev/docs)
 [![Generic badge](https://img.shields.io/badge/Dart-v3.2.1-blue)](https://dart.dev/guides)
 
-Flutter Boilerplate
+Flutter Template
 
 ## ⚡️ Getting Started
 
@@ -37,7 +37,7 @@ Reso coder's flutter clean architecture
 
 ![alt text](https://i0.wp.com/resocoder.com/wp-content/uploads/2019/08/Clean-Architecture-Flutter-Diagram.png?ssl=1)
 
-#### Module generator
+### ⚡️ Module generator
 
 In order to minimize your effort in repetitive code writing, you can use the module_generator.dart
 
@@ -62,23 +62,6 @@ But for this project example, we use [Bloc](https://pub.dev/packages/flutter_blo
 This boilerplate use DummyJson for remote data sources  
 
 See [Auth](https://dummyjson.com/docs/auth) to obtain username and password to login in this app
-
-### Versioning
-
-Major-Minor-Patch
-
-Given a version number MAJOR.MINOR.PATCH, increment the:
-
-1. MAJOR version when you make incompatible API changes,
-2. MINOR version when you add functionality in a backwards compatible manner, and
-3. PATCH version when you make backwards compatible bug fixes.
-   Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
-
-and also supported by [cider](https://pub.dev/packages/cider).
-
-to patch: `cider bump patch --bump-build` or `make patch`
-to minor: `cider bump minor --bump-build` or `make minor`
-to major: `cider bump major --bump-build` or `make major`
 
 ### :capital_abcd: Naming Convention
 
