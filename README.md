@@ -8,17 +8,21 @@ Flutter Boilerplate
 
 ### 🚚 How to run, drive, and build Apk
 
+Add .env file to the project directory (see .env.example)
+
 Example how to run development app
 ```
 flutter clean
 flutter pub get
-flutter run -t lib/main.dart
+flutter pub run build_runner build --delete-conflicting-outputs
+flutter run
 ```
 
 Example how to run production app
 ```
 flutter clean
 flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs
 flutter build apk -t lib/main_production.dart
 ```
 
@@ -43,7 +47,9 @@ visit https://pub.dev/packages/flutter_bloc
 
 [DummyJson](https://dummyjson.com/docs/)
 
-This boilerplate use DummyJson for remote data sources
+This boilerplate use DummyJson for remote data sources  
+
+See [Auth](https://dummyjson.com/docs/auth) to obtain username and password to login in this app
 
 ### Versioning
 
