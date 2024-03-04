@@ -44,7 +44,7 @@ In order to minimize your effort in repetitive code writing, you can use the mod
 simply run
 
 ```
-dart run .\module_generator.dart
+dart run .\codegen\module_generator.dart
 ```
 
 and insert your module name (example: catalog)
