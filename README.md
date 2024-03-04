@@ -2,23 +2,27 @@
 [![Generic badge](https://img.shields.io/badge/Flutter-v3.16.1-blue)](https://flutter.dev/docs)
 [![Generic badge](https://img.shields.io/badge/Dart-v3.2.1-blue)](https://dart.dev/guides)
 
-Flutter Boilerplate
+Flutter Template
 
 ## ⚡️ Getting Started
 
 ### 🚚 How to run, drive, and build Apk
 
+Add .env file to the project directory (see .env.example)
+
 Example how to run development app
 ```
 flutter clean
 flutter pub get
-flutter run -t lib/main.dart
+flutter pub run build_runner build --delete-conflicting-outputs
+flutter run
 ```
 
 Example how to run production app
 ```
 flutter clean
 flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs
 flutter build apk -t lib/main_production.dart
 ```
 
@@ -33,34 +37,31 @@ Reso coder's flutter clean architecture
 
 ![alt text](https://i0.wp.com/resocoder.com/wp-content/uploads/2019/08/Clean-Architecture-Flutter-Diagram.png?ssl=1)
 
+### ⚡️ Module generator
+
+In order to minimize your effort in repetitive code writing, you can use the module_generator.dart
+
+simply run
+
+```
+dart run .\codegen\module_generator.dart
+```
+
+and insert your module name (example: catalog)
+
 ### 🧬️ State Management
 
-Using BLoC for robust and battle proven state management
+Since we use clean architecture, it doesn't matter what state management you prefer to use  
 
-visit https://pub.dev/packages/flutter_bloc
+But for this project example, we use [Bloc](https://pub.dev/packages/flutter_bloc) 
 
 ### API Documentation
 
 [DummyJson](https://dummyjson.com/docs/)
 
-This boilerplate use DummyJson for remote data sources
+This boilerplate use DummyJson for remote data sources  
 
-### Versioning
-
-Major-Minor-Patch
-
-Given a version number MAJOR.MINOR.PATCH, increment the:
-
-1. MAJOR version when you make incompatible API changes,
-2. MINOR version when you add functionality in a backwards compatible manner, and
-3. PATCH version when you make backwards compatible bug fixes.
-   Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
-
-and also supported by [cider](https://pub.dev/packages/cider).
-
-to patch: `cider bump patch --bump-build` or `make patch`
-to minor: `cider bump minor --bump-build` or `make minor`
-to major: `cider bump major --bump-build` or `make major`
+See [Auth](https://dummyjson.com/docs/auth) to obtain username and password to login in this app
 
 ### :capital_abcd: Naming Convention
 
